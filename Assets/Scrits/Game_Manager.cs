@@ -55,7 +55,7 @@ public class Game_Manager : MonoBehaviour
                 NewEnemy.transform.position = new Vector2(InitEnemiesPos.x +j, InitEnemiesPos.y - i);
                 Destroy(NewEnemy.GetComponent<MeshCollider>());
                 StartCoroutine(AddCollider(NewEnemy));
-                NewEnemy.GetComponent<Renderer>().enabled = false;
+                NewEnemy.GetComponent<Renderer>().enabled = true;
 
                 GameObject SpriteEnemy = new GameObject(NewEnemy.name);
                 SpriteEnemy.transform.SetParent(Player.transform);
