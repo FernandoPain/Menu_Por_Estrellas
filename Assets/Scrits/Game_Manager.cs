@@ -61,23 +61,30 @@ public class Game_Manager : MonoBehaviour
             for (int j = 0; j< CurrentWorld.Columns; j++)
             {
                 GameObject NewEnemy = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                
                 NewEnemy.name = "Enemy_" + CurrentWorld.EnemiesID[i];
                 NewEnemy.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
                 //NewEnemy.transform.position = new Vector2(j, -i);
                 NewEnemy.transform.position = new Vector2(InitEnemiesPos.x +j, InitEnemiesPos.y - i);
                 Destroy(NewEnemy.GetComponent<MeshCollider>());
                 StartCoroutine(AddCollider(NewEnemy));
+                
+                //Clase Hoy ==================================================================================
+
                 NewEnemy.GetComponent<Renderer>().enabled = false;
 
                 GameObject SpriteEnemy = new GameObject(NewEnemy.name);
                 SpriteEnemy.transform.SetParent(NewEnemy.transform);
                 SpriteEnemy.transform.localScale = new Vector3(1f, 1f, 1f);
                 SpriteEnemy.transform.localPosition = new Vector2(0, 0);
+                
+                
                 SpriteEnemy.AddComponent<SpriteRenderer>().sprite = 
                     Resources.Load<Sprite>(CurrentWorld.EnemiesID[i] + "/" + CurrentWorld.EnemiesID[i]+"_1");
 
                 Enemy_Creator.EnemyProperties TempEnemy = Enemy_Creator.GetEnemyById(CurrentWorld.EnemiesID[i]);
                 SpriteEnemy.GetComponent<SpriteRenderer>().color = TempEnemy.Skin;
+            
 
                 NewEnemy.AddComponent<Anim_Control>().InitAnim(SpriteEnemy.GetComponent<SpriteRenderer>(),
                     new List<Sprite>(Resources.LoadAll<Sprite>(CurrentWorld.EnemiesID[i].ToString())), 0.5f);
@@ -146,6 +153,7 @@ public class Game_Manager : MonoBehaviour
                 break;
             }
         }
+        
     }
     private void CreateBullet(BulletType _type, Vector2 _pos, float _speed)
     {
