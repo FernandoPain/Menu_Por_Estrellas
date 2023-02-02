@@ -10,6 +10,13 @@ public class Game_Manager : MonoBehaviour
     public float SpeedPlayer;
 
     private World_Creator.WorldProperties CurrentWorld;
+
+    private List<GameObject> SavedEnemies;
+
+    private float EnemySpeed, TotalEnemySpeed;
+
+    public enum EnemyDir { RIGHT, LEFT };
+    public EnemyDir Direction;
   
 
 
@@ -22,6 +29,7 @@ public class Game_Manager : MonoBehaviour
     void Update()
     {
         PlayerMovement();
+        EnemyMovement();
     }
     private void PrintStage()
     {
@@ -44,6 +52,10 @@ public class Game_Manager : MonoBehaviour
         SpritePlayer.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Ship_Player");
 
         //Imprimir Enemigos
+
+        SavedEnemies = new List<GameObject>();
+        TotalEnemySpeed = 0.5f;
+
         for (int i = 0; i< CurrentWorld.EnemiesID.Count; i++)
         {
             for (int j = 0; j< CurrentWorld.Columns; j++)
@@ -55,13 +67,21 @@ public class Game_Manager : MonoBehaviour
                 NewEnemy.transform.position = new Vector2(InitEnemiesPos.x +j, InitEnemiesPos.y - i);
                 Destroy(NewEnemy.GetComponent<MeshCollider>());
                 StartCoroutine(AddCollider(NewEnemy));
-                NewEnemy.GetComponent<Renderer>().enabled = true;
+                NewEnemy.GetComponent<Renderer>().enabled = false;
 
                 GameObject SpriteEnemy = new GameObject(NewEnemy.name);
-                SpriteEnemy.transform.SetParent(Player.transform);
+                SpriteEnemy.transform.SetParent(NewEnemy.transform);
                 SpriteEnemy.transform.localScale = new Vector3(1f, 1f, 1f);
                 SpriteEnemy.transform.localPosition = new Vector2(0, 0);
-                SpriteEnemy.AddComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Ship_Player");
+                SpriteEnemy.AddComponent<SpriteRenderer>().sprite = 
+                    Resources.Load<Sprite>(CurrentWorld.EnemiesID[i] + "/" + CurrentWorld.EnemiesID[i]+"_1");
+
+                Enemy_Creator.EnemyProperties TempEnemy = Enemy_Creator.GetEnemyById(CurrentWorld.EnemiesID[i]);
+                SpriteEnemy.GetComponent<SpriteRenderer>().color = TempEnemy.Skin;
+
+                NewEnemy.AddComponent<Anim_Control>().InitAnim(SpriteEnemy.GetComponent<SpriteRenderer>(),
+                    new List<Sprite>(Resources.LoadAll<Sprite>(CurrentWorld.EnemiesID[i].ToString())), 0.5f);
+                SavedEnemies.Add(NewEnemy);
             }
         }
 
@@ -79,5 +99,63 @@ public class Game_Manager : MonoBehaviour
         Vector2 CurrentPos = Player.transform.position;
         CurrentPos.x = Mathf.Clamp(CurrentPos.x, LimitsStage.x, LimitsStage.y);
         Player.transform.position = CurrentPos;
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            CreateBullet(BulletType.PLAYER, Player.transform.position, 30);
+        }
+    }
+
+    private void EnemyMovement()
+    {
+        EnemySpeed += Time.deltaTime;
+        if (EnemySpeed >= TotalEnemySpeed)
+        {
+            for (int i = 0; i < SavedEnemies.Count; i++)
+            {
+                switch (Direction)
+                {
+                    case EnemyDir.RIGHT:
+                        SavedEnemies[i].transform.position =
+                            new Vector2(SavedEnemies[i].transform.position.x + 1, SavedEnemies[i].transform.position.y);
+                        break;
+                    case EnemyDir.LEFT:
+                        SavedEnemies[i].transform.position =
+                            new Vector2(SavedEnemies[i].transform.position.x - 1, SavedEnemies[i].transform.position.y);
+                        break ;
+
+                }
+            }
+            //Comprobar si algún enemigo ha llegado al límite de la pantalla
+            CheckEnemyLimits();
+            EnemySpeed = 0;
+        }
+    }
+    private void CheckEnemyLimits()
+    {
+        for(int i = 0; i < SavedEnemies.Count; i++)
+        {
+            if(SavedEnemies[i].transform.position.x <= LimitsStage.x) //Moviendo a la izquierda
+            {
+                Direction = EnemyDir.RIGHT;
+                break;
+            }
+            if(SavedEnemies[i].transform.position.x >= LimitsStage.y)
+            {
+                Direction=EnemyDir.LEFT;
+                break;
+            }
+        }
+    }
+    private void CreateBullet(BulletType _type, Vector2 _pos, float _speed)
+    {
+        GameObject NewBullet = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        NewBullet.name = "Bullet";
+        NewBullet.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
+        NewBullet.transform.position = _pos;
+        Destroy(NewBullet.GetComponent<MeshCollider>());
+        StartCoroutine(AddCollider(NewBullet));
+
+        NewBullet.AddComponent<Bullet_Control>().InitBullet(_type, _speed);
     }
 }

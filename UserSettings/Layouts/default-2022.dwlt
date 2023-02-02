@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Inspector
   m_RootView: {fileID: 6}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -325,14 +325,14 @@ MonoBehaviour:
   m_LastFolders:
   - Assets/Resources
   m_LastFoldersGridSize: 94
-  m_LastProjectPath: C:\Users\ALUMNO\Documents\GitHub\Menu_Por_Estrellas
+  m_LastProjectPath: F:\Unity_Projects\GitHub\Menu_Por_Estrellas
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: e25e0000
-    m_LastClickedID: 24290
-    m_ExpandedIDs: 00000000be5e0000e25e000000ca9a3b
+    m_SelectedIDs: e4920000
+    m_LastClickedID: 37604
+    m_ExpandedIDs: 00000000e092000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -348,7 +348,7 @@ MonoBehaviour:
       m_IsRenaming: 0
       m_OriginalEventType: 11
       m_IsRenamingFilename: 1
-      m_ClientGUIView: {fileID: 0}
+      m_ClientGUIView: {fileID: 5}
     m_SearchString: 
     m_CreateAssetUtility:
       m_EndAction: {fileID: 0}
@@ -360,7 +360,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000be5e0000
+    m_ExpandedIDs: 
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -488,9 +488,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: c65e0000
+      m_SelectedIDs: ba910000
       m_LastClickedID: 0
-      m_ExpandedIDs: 28fbffff
+      m_ExpandedIDs: 6cc2ffffd4c3ffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -805,9 +805,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: 1.1934226, y: 1.9318619, z: -0.038538586}
+    m_Target: {x: 0.0072931647, y: 0.018736511, z: -0.08246483}
     speed: 2
-    m_Value: {x: 1.1934226, y: 1.9318619, z: -0.038538586}
+    m_Value: {x: 0.0072931647, y: 0.018736511, z: -0.08246483}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
