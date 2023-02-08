@@ -170,6 +170,7 @@ MonoBehaviour:
   LimitsStage: {x: -13, y: 13}
   InitEnemiesPos: {x: -13, y: 7}
   SpeedPlayer: 50
+  Direction: 0
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
